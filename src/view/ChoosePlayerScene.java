@@ -1,5 +1,6 @@
 package view;
 
+import controller.Controller;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -16,13 +17,14 @@ import model.Player;
 import java.util.ArrayList;
 
 public class ChoosePlayerScene extends Scene {
+    private static Controller controller;
     private static ChoosePlayerScene view = null;
     private static ListView<Player> mListView = new ListView<>();
     private ChoosePlayerScene(Parent parent, double v, double v1) {
         super(parent, v, v1);
     }
 
-    public static ChoosePlayerScene getInstance(ArrayList<Player> playersList) {
+    public static ChoosePlayerScene getInstance(Controller controller, ArrayList<Player> playersList) {
         ChoosePlayerScene.setListView(playersList);
         if(ChoosePlayerScene.view == null ) {
             GridPane grid = new GridPane();
@@ -37,25 +39,30 @@ public class ChoosePlayerScene extends Scene {
             scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
             grid.add(scenetitle, 0, 0, 2, 1);
 
+            mListView.getSelectionModel().select(0);
             grid.add(mListView, 0, 1);
+
             Button btn = new Button();
             btn.setText("Start");
             btn.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
-                    System.out.println("Game started");
+                    controller.startGame(mListView.getSelectionModel().getSelectedItem());
                 }
             });
             grid.add(btn, 0, 2);
+
+
             Button CreateNewPlayerbtn = new Button();
             CreateNewPlayerbtn.setText("Create a New Player");
             CreateNewPlayerbtn.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
-                    System.out.println("Game started");
+                    controller.setAddPlayerScene();
                 }
             });
             grid.add(CreateNewPlayerbtn, 0, 3);
+
             return new ChoosePlayerScene(grid, 800, 600);
         }
         return ChoosePlayerScene.view;

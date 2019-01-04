@@ -2,7 +2,7 @@ package model;
 
 import java.util.TreeSet;
 
-public class Player {
+public class Player implements java.io.Serializable {
     private String pseudo;
     private TreeSet<Integer> scores;
     public Player(String pseudo) {
@@ -17,7 +17,7 @@ public class Player {
     }
 
     public String getPseudo() {
-        return pseudo;
+        return this.pseudo;
     }
     public void addNewScore(int score) {
         this.scores.add(score);
