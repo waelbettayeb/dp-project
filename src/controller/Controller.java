@@ -2,18 +2,18 @@ package controller;
 
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import model.Player;
-import model.PlayerManager;
-import model.PseudoExeption;
+import model.*;
 import view.AddPlayerScene;
 import view.ChoosePlayerScene;
+import view.GameScene;
 
 import java.util.ArrayList;
 
 public class Controller {
-    Scene view;
-    Stage primaryStage;
-    ArrayList<Player> players = PlayerManager.loadPlayers();
+    private Session session;
+    private Scene view;
+    private Stage primaryStage;
+    private ArrayList<Player> players = PlayerManager.loadPlayers();
 
     public Controller(Stage Stage){
         this.primaryStage = Stage;
@@ -36,13 +36,15 @@ public class Controller {
         this.primaryStage.setScene(view);
     }
     public void setGameScene(){
-
+        view = GameScene.getInstance(this, session.getCurrentWord());
+        this.primaryStage.setScene(view);
     }
     public void setEndGameScene(){
 
     }
 
-    public void startGame(Player selectedItem) {
+    public void startGame(Player player) {
+        session = SessionManager.startSession(player);
         this.setGameScene();
     }
 
