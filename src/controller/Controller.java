@@ -64,7 +64,7 @@ public class Controller {
             startGame(PlayerManager.creatPlayer(string));
         }
         catch (PseudoExeption e){
-            AddPlayerScene.getInstance(this, !players.isEmpty()).setPlayerNameErrorLabel();
+            AddPlayerScene.setPlayerNameErrorLabel();
         }
     }
 }

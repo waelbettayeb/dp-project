@@ -85,7 +85,7 @@ public class AddPlayerScene extends Scene {
         errorLabel.setText("Error: " + ERROR_TEXT);
     }
     public static void setPlayerNameErrorLabel() {
-        String ERROR_TEXT = "Le nom est inacceptable";
+        String ERROR_TEXT = "Your name must start with uppercase";
         errorLabel.setText("Error: " + ERROR_TEXT);
     }
 

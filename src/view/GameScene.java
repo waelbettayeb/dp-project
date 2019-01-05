@@ -78,6 +78,7 @@ public class GameScene extends Scene {
                         casesView.getChildren().forEach(node -> node.setDisable(true));
                         nextBtn.setDisable(false);
                         if(session.endSession()) {
+                            schema = new Schema();
                             controller.setEndGameScene();
                         }
                     }
@@ -109,6 +110,7 @@ public class GameScene extends Scene {
                                 casesView.getChildren().forEach(node -> node.setDisable(true));
                                 nextBtn.setDisable(false);
                                 if(session.endSession()) {
+                                    schema = new Schema();
                                     GameScene.controller.setEndGameScene();
                                 }
                             }
