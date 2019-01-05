@@ -25,6 +25,7 @@ public class ChoosePlayerScene extends Scene {
     }
 
     public static ChoosePlayerScene getInstance(Controller controller, ArrayList<Player> playersList) {
+
         ChoosePlayerScene.setListView(playersList);
         if(ChoosePlayerScene.view == null ) {
             GridPane grid = new GridPane();
@@ -69,7 +70,7 @@ public class ChoosePlayerScene extends Scene {
     }
 
     public static void setListView(ArrayList<Player> playersList) {
-        ChoosePlayerScene.mListView.getItems().removeAll();
+        ChoosePlayerScene.mListView.getItems().clear();
         ChoosePlayerScene.mListView.getItems().addAll(playersList);
     }
 }

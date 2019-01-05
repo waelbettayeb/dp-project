@@ -24,10 +24,19 @@ public class Session {
     }
     public boolean setChar(char aChar, int index){
         Box box = words.get(this.index).getBoxes().get(index);
+
         return box.setActualAnswer(aChar);
     }
     public Word getCurrentWord(){
-        return words.get(this.index);
+        return words.get(this.index % 10);
+    }
+    public Word getNextWord(){
+        this.incIndex();
+        return words.get(this.index %10);
+    }
+
+    public int getIndex() {
+        return index;
     }
 
     public boolean endSession() {
@@ -39,6 +48,20 @@ public class Session {
                 ref.i++;
         });
         return ((index > 9)||(ref.i>5));
+    }
+    public boolean isWin(){
+        var ref = new Object() {
+            int i = 0;
+        };
+        words.forEach(word -> {
+            if(word.isMissed())
+                ref.i++;
+        });
+        return ((endSession()) && (ref.i < 6));
+    }
+
+    public Player getPlayer() {
+        return player;
     }
 
     public void incIndex() {

@@ -7,7 +7,7 @@ public class PropositionBox extends Box implements IMalus {
     private static int UNIT_SCORE = 2;
     private static int MALUS= 1;
     private static int MAX_LETTREPROPOSE = 4;
-    private char[] proposedChars;
+    private ArrayList<Character> proposedChars;
 
 
     public PropositionBox(char expectedAnswer) {
@@ -22,20 +22,20 @@ public class PropositionBox extends Box implements IMalus {
 
     private void generatePropositionBoxes(){
 
-        char[] lettrePropose = new char[MAX_LETTREPROPOSE];
+        ArrayList<Character> lettrePropose = new ArrayList<Character>();
         Random randomGenerator = new Random();
         int lettreIndex = randomGenerator.nextInt(MAX_LETTREPROPOSE);
         for(int i = 0; i < MAX_LETTREPROPOSE; i++ ) {
 
             if(i == lettreIndex)
-                lettrePropose[i] = this.getExpectedAnswer();
+                lettrePropose.add( this.getExpectedAnswer());
             else
-                lettrePropose[i] = (char) (randomGenerator.nextInt(26)+ (int) 'a') ;
+                lettrePropose.add((char) (randomGenerator.nextInt(26)+ (int) 'a') );
         }
         this.proposedChars = lettrePropose;
     }
 
-    public char[] getProposedChars() {
+    public ArrayList<Character> getProposedChars() {
         return proposedChars;
     }
 }

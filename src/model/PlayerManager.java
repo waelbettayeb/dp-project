@@ -11,6 +11,9 @@ public class PlayerManager {
         playerIO.createNewPlayer(player);
         return player;
     }
+    public static void savePlayer(Player player) {
+        playerIO.savePlayerStat(player);
+    }
     private static boolean verifyPlayerName(String string){
         int charInt = (int) string.charAt(0);
         return (charInt >= 'A') && (charInt <= 'Z');

@@ -5,6 +5,7 @@ import javafx.stage.Stage;
 import model.*;
 import view.AddPlayerScene;
 import view.ChoosePlayerScene;
+import view.EndGameScene;
 import view.GameScene;
 
 import java.util.ArrayList;
@@ -32,6 +33,7 @@ public class Controller {
         this.primaryStage.setScene(view);
     }
     public void setChoosePlayerScene(){
+
         view = ChoosePlayerScene.getInstance(this, PlayerManager.loadPlayers());
         this.primaryStage.setScene(view);
     }
@@ -40,12 +42,11 @@ public class Controller {
         this.primaryStage.setScene(view);
     }
     public void setEndGameScene(){
-
+        this.saveState();
+        view = EndGameScene.getInstance(this, session);
+        this.primaryStage.setScene(view);
     }
 
-    public void setChar(char aChar, int index) {
-//        session.setChar()
-    }
     public Session getSession() {
         return session;
     }
@@ -54,7 +55,10 @@ public class Controller {
         this.session = SessionManager.startSession(player);
         this.setGameScene();
     }
-
+    public void saveState(){
+        session.getPlayer().addNewScore(session.getScore());
+        PlayerManager.savePlayer(session.getPlayer());
+    }
     public void creatPlayer(String string) {
         try {
             startGame(PlayerManager.creatPlayer(string));

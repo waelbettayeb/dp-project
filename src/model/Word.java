@@ -50,4 +50,13 @@ public class Word {
     public model.Hint getHint() {
         return Hint;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        boxes.forEach(box -> {
+            sb.append(box.getExpectedAnswer());
+        });
+        return sb.toString();
+    }
 }

@@ -8,7 +8,7 @@ public class Player implements java.io.Serializable {
     public Player(String pseudo) {
         this.pseudo = pseudo;
         scores = new TreeSet<>();
-        scores.add(0);
+//        scores.add(0);
     }
 
     public Player(String pseudo, TreeSet<Integer> scores) {
@@ -25,7 +25,8 @@ public class Player implements java.io.Serializable {
 
     @Override
     public String toString() {
-
+        if(scores.isEmpty())
+            return this.pseudo + " <0>";
         return this.pseudo + " <" + scores.first() + ">";
     }
 }

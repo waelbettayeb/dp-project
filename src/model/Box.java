@@ -19,6 +19,7 @@ public abstract class Box {
             return 0;
     }
     public boolean setActualAnswer(char actualAnswer) {
+        this.actualAnswer = actualAnswer;
         System.out.println(remainingAttemptCounter);
         if((!isPassed())&&(!isMissed())){
             remainingAttemptCounter--;
