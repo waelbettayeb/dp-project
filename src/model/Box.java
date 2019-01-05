@@ -3,12 +3,13 @@ package model;
 public abstract class Box {
     private static int MAX_ATTEMPTS_NUMBER = 1;
     private static int UNIT_SCORE = 1;
-    private int remainingAttemptCounter;
+    int remainingAttemptCounter;
     private char expectedAnswer;
     private char actualAnswer;
 
     public Box(char expectedAnswer) {
         this.expectedAnswer = expectedAnswer;
+        remainingAttemptCounter = MAX_ATTEMPTS_NUMBER;
     }
 
     public int getScore() {
@@ -18,9 +19,10 @@ public abstract class Box {
             return 0;
     }
     public boolean setActualAnswer(char actualAnswer) {
+        System.out.println(remainingAttemptCounter);
         if((!isPassed())&&(!isMissed())){
             remainingAttemptCounter--;
-            return (remainingAttemptCounter >= 0)? this.setActualAnswer(actualAnswer) : false;
+            return (remainingAttemptCounter >= 0)? (actualAnswer==expectedAnswer) : false;
         }
         return false;
     }

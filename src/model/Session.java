@@ -30,4 +30,18 @@ public class Session {
         return words.get(this.index);
     }
 
+    public boolean endSession() {
+        var ref = new Object() {
+            int i = 0;
+        };
+        words.forEach(word -> {
+            if(word.isMissed())
+                ref.i++;
+        });
+        return ((index > 9)||(ref.i>5));
+    }
+
+    public void incIndex() {
+        this.index++;
+    }
 }

@@ -7,6 +7,8 @@ public class MultiChanceBox extends Box implements IMalus{
 
     public MultiChanceBox(char expectedAnswer) {
         super(expectedAnswer);
+        this.remainingAttemptCounter = MAX_ATTEMPTS_NUMBER;
+
     }
 
     @Override

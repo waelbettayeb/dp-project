@@ -20,7 +20,7 @@ public class WordBuilder {
             boxes.add(new PropositionBox(string.charAt(length - sum + i)));
         }
         for (int i = 0; i < numberOfZeroChanceBox; i++) {
-            boxes.add(new ZeroChanceBox(string.charAt(length - numberOfPropositionBox + i)));
+            boxes.add(new ZeroChanceBox(string.charAt(length - numberOfZeroChanceBox + i)));
         }
 
         return new Word(boxes, hint);

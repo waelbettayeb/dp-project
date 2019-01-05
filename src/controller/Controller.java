@@ -36,15 +36,22 @@ public class Controller {
         this.primaryStage.setScene(view);
     }
     public void setGameScene(){
-        view = GameScene.getInstance(this, session.getCurrentWord());
+        view = GameScene.getInstance(this, session);
         this.primaryStage.setScene(view);
     }
     public void setEndGameScene(){
 
     }
 
+    public void setChar(char aChar, int index) {
+//        session.setChar()
+    }
+    public Session getSession() {
+        return session;
+    }
+
     public void startGame(Player player) {
-        session = SessionManager.startSession(player);
+        this.session = SessionManager.startSession(player);
         this.setGameScene();
     }
 

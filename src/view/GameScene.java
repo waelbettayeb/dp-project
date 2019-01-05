@@ -1,6 +1,8 @@
 package view;
 
 import controller.Controller;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -10,28 +12,26 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import model.*;
 
-import java.util.ArrayList;
-
 public class GameScene extends Scene {
     private static Controller controller;
+    private static Session session;
     private static GameScene instance = null;
     private static Schema schema = new Schema();
-    private static HBox CasesView = new HBox();
+    private static HBox casesView = new HBox();
+    static Button nextBtn = new Button();
 
     private GameScene(Parent parent, double v, double v1) {
         super(parent, v, v1);
     }
 
-    public static GameScene getInstance(Controller controller, Word word) {
-        creatCasesView(word);
+    public static GameScene getInstance(Controller controller, Session session1) {
+        creatCasesView(session1);
         if(instance != null) {
             return instance;
         }
@@ -40,16 +40,70 @@ public class GameScene extends Scene {
         }
     }
 
-    private static void creatCasesView(Word word) {
-
+    private static void creatCasesView(Session session1) {
+        GameScene.session = session1;
+        Word word = session.getCurrentWord();
+        GameScene.casesView.getChildren().clear();
         word.getBoxes().forEach(box -> {
-            if(box instanceof ZeroChanceBox){
-
-            }else if(box instanceof PropositionBox){
-
-            }else {
+            if(box instanceof PropositionBox) {
+//                ComboBox<Character> caseView = new ComboBox<>();
+//                caseView.add
+//                caseView.setStyle("-fx-background-color:#ff4005;" +
+//                        "-fx-font: 35 arial;" +
+//                        "-fx-text-fill: white;");
+//                GameScene.casesView.getChildren().add(caseView);
 
             }
+            else{
+                TextField caseview = new TextField();
+                caseview.textProperty().addListener(new ChangeListener<String>() {
+                    @Override
+                    public void changed(final ObservableValue<? extends String> ov, final String oldValue, final String newValue) {
+                        if ((caseview.getText().length() > 1)) {
+                            String s = caseview.getText().substring(1, 2);
+                            caseview.setText(s);
+                        }else{
+                            if ((caseview.getText().length() > 0)) {
+                                box.setActualAnswer(caseview.getCharacters().charAt(0));
+                            }
+                            if(box.isPassed()){
+                                caseview.setDisable(true);
+                            }
+                            if(box.isMissed()) {
+                                schema.schemaSuivant();
+                                casesView.getChildren().forEach(node -> node.setDisable(true));
+                                nextBtn.setDisable(false);
+                                session.incIndex();
+                                if(session.endSession()) {
+                                    controller.setEndGameScene();
+                                }
+                            }
+                            System.out.println("char");
+                        }
+                    }
+
+                });
+//                caseview.setMaxSize(0, 1);
+                if(box instanceof ZeroChanceBox){
+
+                    caseview.setStyle("-fx-background-color:#76447d;" +
+                            "-fx-font: 35 arial ;" +
+                            "-fx-text-fill: white;"+
+                            "-fx-padding: 10px;" +
+                            "-fx-border-insets: 5px;" +
+                            "-fx-background-insets: 5px;");
+                }else {
+
+                    caseview.setStyle("-fx-background-color:#00a8bc;" +
+                            "-fx-font: 35 arial;" +
+                            "-fx-text-fill: white;" +
+                            "-fx-padding: 10px;" +
+                            "-fx-border-insets: 5px;" +
+                            "-fx-background-insets: 5px;");
+                }
+                GameScene.casesView.getChildren().add(caseview);
+            }
+
         });
 
     }
@@ -74,25 +128,20 @@ public class GameScene extends Scene {
         Label userName = new Label("Username:");
         grid.add(userName, 0, 1);
 
+        grid.add(GameScene.casesView, 0, 3);
 
 
-        Button btn = new Button();
-        btn.setText("Next");
-        btn.setOnAction(new EventHandler<ActionEvent>() {
+        nextBtn = new Button();
+        nextBtn.setText("Next");
+        nextBtn.setDisable(true);
+        nextBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+                creatCasesView(session);
             }
         });
-        grid.add(btn, 0, 4);
+        grid.add(nextBtn, 0, 4);
 
-        Button ChoosePlayerbtn = new Button();
-        ChoosePlayerbtn.setText("Play with an existing player");
-        ChoosePlayerbtn.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                controller.setChoosePlayerScene();
-            }
-        });
     return grid;
 
     }
